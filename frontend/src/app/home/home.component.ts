@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { MathfieldElement, Mathfield } from 'mathlive';
 
 @Component({
@@ -10,18 +10,20 @@ import { MathfieldElement, Mathfield } from 'mathlive';
 })
 export class HomeComponent implements AfterViewInit {
 
+  current = ''
+
   ngAfterViewInit(): void {
     let mfe = new MathfieldElement();
 
     // Set initial value and options
     mfe.value = "\\frac{\\sin(x)}{\\cos(x)}";
 
-    // Options can be set either as an attribute (for simple options)...
-    mfe.setAttribute('virtual-keyboard-layout', 'dvorak');
-
     // Attach the element to the DOM
     let mathLiveDiv = document.getElementById("mathLive");
     mathLiveDiv.appendChild(mfe);
+
+    mathLiveDiv.addEventListener("input",(ev) => this.current = mfe.value);
+
   }
 
 }
